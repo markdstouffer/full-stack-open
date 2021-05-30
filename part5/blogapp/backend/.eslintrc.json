@@ -1,0 +1,25 @@
+{
+    "env": {
+      "jest": true
+    },
+    "extends": "airbnb",
+
+    "rules": {
+        "quotes": ["warn", "single"],
+        "eqeqeq": "error",
+        "no-trailing-spaces": "error",
+        "object-curly-spacing": [
+            "error", "always"
+        ],
+        "no-console": 0,
+        "linebreak-style" : 0,
+        "semi": 0,
+        "consistent-return": 0,
+        "no-underscore-dangle": 0,
+        "no-param-reassign": 0,
+        "comma-dangle": 0,
+        "no-unused-vars": 0
+    }
+
+
+}
