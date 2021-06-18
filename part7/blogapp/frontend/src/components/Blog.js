@@ -33,9 +33,9 @@ const Blog = (props) => {
   }
 
   const showRemoveButton = () => {
-    // if (props.user.username === props.blog.user.username) {
-    return (<button id="deleteButton" onClick={handleDelete}>remove</button>)
-    // }
+    if (props.user.username === props.blog.user.username) {
+      return (<button id="deleteButton" onClick={handleDelete}>remove</button>)
+    }
   }
 
   return (

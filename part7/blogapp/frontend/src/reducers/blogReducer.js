@@ -59,14 +59,13 @@ export const initializeBlogs = () => {
   }
 }
 
-export const createBlog = (content) => {
-  return {
-    type: 'CREATE_BLOG',
-    data: {
-      title: content.title,
-      author: content.author,
-      url: content.url
-    }
+export const createBlog = (obj) => {
+  return async dispatch => {
+    const postedBlog = await blogService.create(obj)
+    dispatch({
+      type: 'CREATE_BLOG',
+      data: postedBlog
+    })
   }
 }
 
