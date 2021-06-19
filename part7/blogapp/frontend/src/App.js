@@ -20,22 +20,27 @@ import ToggleBlogForm from './components/ToggleBlogForm'
 import Notification from './components/Notification'
 
 const App = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const dispatch = useDispatch()
   const user = useSelector(state => state.user)
   const users = useSelector(state => state.users)
   const blogs = useSelector(state => state.blogs)
+  const dispatch = useDispatch()
+
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
 
   useEffect(() => {
     dispatch(initializeBlogs())
+  }, [])
+
+  useEffect(() => {
     dispatch(getUsers())
     const userJSON = window.localStorage.getItem('loggedBlogappUser')
     if (userJSON) {
       const u = JSON.parse(userJSON)
       dispatch(setUser(u))
     }
-  }, [dispatch])
+  }, [])
 
   const handleLogin = async (event) => {
     event.preventDefault()
