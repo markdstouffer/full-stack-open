@@ -1,25 +1,35 @@
-/* eslint-disable no-unused-vars */
+//REACT
 import React, { useState, useEffect } from 'react'
-import ToggleBlogForm from './components/ToggleBlogForm'
-import Notification from './components/Notification'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from 'react-router-dom'
+//REDUCERS
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
+import { getUsers } from './reducers/usersReducer'
+//COMPONENTS
 import Login from './components/Login'
 import BlogList from './components/BlogList'
+import BlogPage from './components/BlogPage'
 import Header from './components/Header'
+import Users from './components/Users'
+import User from './components/User'
+import ToggleBlogForm from './components/ToggleBlogForm'
+import Notification from './components/Notification'
 
 const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const dispatch = useDispatch()
   const user = useSelector(state => state.user)
+  const users = useSelector(state => state.users)
+  const blogs = useSelector(state => state.blogs)
 
   useEffect(() => {
     dispatch(initializeBlogs())
-  }, [dispatch])
-
-  useEffect(() => {
+    dispatch(getUsers())
     const userJSON = window.localStorage.getItem('loggedBlogappUser')
     if (userJSON) {
       const u = JSON.parse(userJSON)
@@ -32,6 +42,10 @@ const App = () => {
     dispatch(loginUser({ username, password }))
     setUsername('')
     setPassword('')
+  }
+
+  const padding = {
+    padding: 7
   }
 
   if (user === null) {
@@ -50,12 +64,30 @@ const App = () => {
   }
 
   return (
-    <div>
+    <Router>
+      <div>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        <Header />
+      </div>
       <Notification />
-      <Header />
-      <ToggleBlogForm />
-      <BlogList />
-    </div>
+      <h1>blog app</h1>
+      <Switch>
+        <Route path="/blogs/:id">
+          <BlogPage blogs={blogs}/>
+        </Route>
+        <Route path="/users/:id">
+          <User users={users}/>
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Route path="/">
+          <ToggleBlogForm />
+          <BlogList />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 

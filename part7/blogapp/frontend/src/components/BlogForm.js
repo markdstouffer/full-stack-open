@@ -8,9 +8,8 @@ const BlogForm = () => {
     title: '', author: '', url: ''
   })
   const dispatch = useDispatch()
-
   const addBlog = async (blogObject) => {
-    await dispatch(createBlog(blogObject))
+    dispatch(createBlog(blogObject))
   }
 
   const handleBlog = (event) => {

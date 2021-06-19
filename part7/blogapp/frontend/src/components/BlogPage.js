@@ -1,9 +1,16 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router'
 import { likeBlog } from '../reducers/blogReducer'
 import { notificationChangeGood } from '../reducers/notificationReducer'
 
-const BlogFull = ({ blog }) => {
+const BlogPage = ({ blogs }) => {
+  const blog = blogs.find(blog => blog.id === useParams().id)
+
+  if (!blog) {
+    return null
+  }
+
   const dispatch = useDispatch()
 
   const handleLikes = (event) => {
@@ -11,16 +18,15 @@ const BlogFull = ({ blog }) => {
     dispatch(likeBlog(blog))
     dispatch(notificationChangeGood(`You liked '${blog.title}'`, 5))
   }
-
-
   return (
     <div>
-      <u>Title:</u> <b>{blog.title}</b> <br />
-      <u>URL:</u> <a href={blog.url}>{blog.url}</a> <br />
-      <u>Likes:</u> <span className="likesSpan">{blog.likes}</span>
-      <button id="likeButton" onClick={handleLikes}>like</button> <br />
-      <u>Posted by:</u> <i>{blog.author}</i>
+      <h2>{blog.title}</h2>
+      <a href={blog.url}>{blog.url}</a> <br />
+      {blog.likes} likes
+      <button onClick={handleLikes}>like</button> <br />
+      added by {blog.user.name}
     </div>
   )
 }
-export default BlogFull
+
+export default BlogPage

@@ -64,7 +64,7 @@ export const createBlog = (obj) => {
     const postedBlog = await blogService.create(obj)
     dispatch({
       type: 'CREATE_BLOG',
-      data: postedBlog
+      data: postedBlog[0]
     })
   }
 }

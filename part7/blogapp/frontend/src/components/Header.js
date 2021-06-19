@@ -14,13 +14,10 @@ const Header = () => {
   }
 
   return (
-    <div>
-      <h2>blogs</h2>
-      <em>{user.name} logged in
-        <button id="logoutButton" type="submit" onClick={handleLogout}>logout</button>
-        <br /><br />
-      </em>
-    </div>
+    <em>{user.name} logged in
+      <button id="logoutButton" type="submit" onClick={handleLogout}>logout</button>
+      <br /><br />
+    </em>
   )
 }
 
