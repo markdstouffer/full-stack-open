@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const User = ({ users }) => {
   if (users === null) {
@@ -16,7 +18,7 @@ const User = ({ users }) => {
         <div>
           {blogs.map(blog =>
             <li key={blog.id}>
-              {blog.title}
+              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
             </li>
           )}
         </div>
@@ -26,8 +28,7 @@ const User = ({ users }) => {
 
   return (
     <div>
-      <h1>{user.name}</h1>
-      <h2>added blogs</h2>
+      <h3>user: {user.name}'s added blogs</h3>
       <ul>
         {renderBlogs()}
       </ul>

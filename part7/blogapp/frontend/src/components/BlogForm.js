@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { notificationChangeGood } from '../reducers/notificationReducer'
 import { createBlog } from '../reducers/blogReducer'
+import { Form, Button } from 'react-bootstrap'
 
 const BlogForm = () => {
   const [newBlog, setNewBlog] = useState({
@@ -20,18 +21,16 @@ const BlogForm = () => {
       url: newBlog.url
     })
     setNewBlog({ title: '', author: '', url: '' })
-    dispatch(notificationChangeGood(`a new blog ${newBlog.title} by ${newBlog.author} added`, 5))
+    dispatch(notificationChangeGood(`a new blog ${newBlog.title} added`, 5))
+
   }
 
   return (
-    <form onSubmit={handleBlog}>
-      <div>
-        title:
-        <input
-          id="title"
-          type="text"
+    <Form onSubmit={handleBlog}>
+      <Form.Group>
+        <Form.Label>title:</Form.Label>
+        <Form.Control
           value={newBlog.title}
-          name="Title"
           onChange={({ target }) => {
             const newTitle = {
               ...newBlog,
@@ -40,14 +39,11 @@ const BlogForm = () => {
             setNewBlog(newTitle)
           }}
         />
-      </div>
-      <div>
-        author:
-        <input
-          id="author"
-          type="text"
+        <Form.Label>content:</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={4}
           value={newBlog.author}
-          name="Author"
           onChange={({ target }) => {
             const newAuthor = {
               ...newBlog,
@@ -56,14 +52,9 @@ const BlogForm = () => {
             setNewBlog(newAuthor)
           }}
         />
-      </div>
-      <div>
-        url:
-        <input
-          id="url"
-          type="text"
+        <Form.Label>url:</Form.Label>
+        <Form.Control
           value={newBlog.url}
-          name="url"
           onChange={({ target }) => {
             const newUrl = {
               ...newBlog,
@@ -72,9 +63,9 @@ const BlogForm = () => {
             setNewBlog(newUrl)
           }}
         />
-      </div>
-      <button type="submit">create</button>
-    </form>
+      </Form.Group>
+      <Button id="submitgrp" variant="primary" type="submit">create</Button>
+    </Form>
   )
 }
 

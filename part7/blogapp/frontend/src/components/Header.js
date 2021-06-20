@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationChangeGood } from '../reducers/notificationReducer'
 import { logOut } from '../reducers/userReducer'
+import { Button } from 'react-bootstrap'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -14,10 +15,10 @@ const Header = () => {
   }
 
   return (
-    <em>{user.name} logged in
-      <button id="logoutButton" type="submit" onClick={handleLogout}>logout</button>
-      <br /><br />
-    </em>
+    <div>
+      <em style={{ paddingRight: '10px' }}>{user.name} logged in</em>
+      <Button variant="outline-danger" size="sm" type="submit" onClick={handleLogout}>logout</Button>
+    </div>
   )
 }
 

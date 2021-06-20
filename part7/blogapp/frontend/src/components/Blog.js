@@ -6,18 +6,10 @@ import {
 } from 'react-router-dom'
 
 const Blog = (props) => {
-  const hideWhenVisible = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+
   return (
     <div id="oneBlog">
-      <div style={hideWhenVisible}>
-        <Link to={`/blogs/${props.blog.id}`}>{props.blog.title}</Link>
-      </div>
+      <Link to={`/blogs/${props.blog.id}`}>{props.blog.title}</Link>
     </div>
   )
 }

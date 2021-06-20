@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router'
 import { likeBlog, commentBlog } from '../reducers/blogReducer'
 import { notificationChangeGood } from '../reducers/notificationReducer'
+import { Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Comments = ({ blog }) => {
   if (!blog.comments) {
@@ -33,18 +35,14 @@ const Comments = ({ blog }) => {
           </li>
         )}
       </ul>
-      <form onSubmit={handleComment}>
-        <input
-          id="comment"
+      <Form onSubmit={handleComment}>
+        <Form.Control
           type="text"
           value={comment}
-          name="Comment"
-          onChange={({ target }) => {
-            setComment(target.value)
-          }}
+          onChange={({ target }) => { setComment(target.value) }}
         />
-        <button type="submit">post</button>
-      </form>
+        <Button style={{ float: 'right' }} variant="primary" size="sm" type="submit">add comment</Button>
+      </Form>
     </div>
   )
 }
@@ -64,12 +62,17 @@ const BlogPage = ({ blogs }) => {
   }
   return (
     <div>
-      <h2>{blog.title}</h2>
-      <a href={blog.url}>{blog.url}</a> <br />
-      {blog.likes} likes
-      <button onClick={handleLikes}>like</button> <br />
-      added by {blog.user.name}
-      <Comments blog={blog} />
+      <div className="page-child">
+        <h2>{blog.title}</h2>
+        <p>{blog.author}</p>
+        <a href={blog.url}>{blog.url}</a> <br />
+        {blog.likes} likes
+        <Button variant="success" size="sm" onClick={handleLikes}>like</Button> <br />
+        added by <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link>
+      </div>
+      <div className="page-child">
+        <Comments blog={blog} />
+      </div>
     </div>
   )
 }

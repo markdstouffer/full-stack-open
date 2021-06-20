@@ -5,6 +5,8 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link
 } from 'react-router-dom'
+//SERVICES
+import signupService from './services/signup'
 //REDUCERS
 import { initializeBlogs } from './reducers/blogReducer'
 import { setUser, loginUser } from './reducers/userReducer'
@@ -18,6 +20,9 @@ import Users from './components/Users'
 import User from './components/User'
 import ToggleBlogForm from './components/ToggleBlogForm'
 import Notification from './components/Notification'
+import Signup from './components/Signup'
+//STYLING LIBRARY
+import { Navbar, Nav } from 'react-bootstrap'
 
 const App = () => {
   const user = useSelector(state => state.user)
@@ -27,13 +32,10 @@ const App = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
+  const [name, setName] = useState('')
 
   useEffect(() => {
     dispatch(initializeBlogs())
-  }, [])
-
-  useEffect(() => {
     dispatch(getUsers())
     const userJSON = window.localStorage.getItem('loggedBlogappUser')
     if (userJSON) {
@@ -49,6 +51,19 @@ const App = () => {
     setPassword('')
   }
 
+  const handleSignup = async (event) => {
+    event.preventDefault()
+    const newUserDetails = {
+      username: username,
+      password: password,
+      name: name
+    }
+    await signupService.signup(newUserDetails)
+    setUsername('')
+    setPassword('')
+    setName('')
+  }
+
   const padding = {
     padding: 7
   }
@@ -56,43 +71,75 @@ const App = () => {
   if (user === null) {
     return (
       <div>
-        <Notification />
-        <Login
-          username={username}
-          password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
-          handleLogin={handleLogin}
-        />
+        <Router>
+          <Notification />
+          <Switch>
+            <Route path="/signup">
+              <Signup
+                username={username}
+                password={password}
+                name={name}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                setName={setName}
+                handleSignup={handleSignup}
+              />
+            </Route>
+            <Route path="/">
+              <Login
+                username={username}
+                password={password}
+                setUsername={setUsername}
+                setPassword={setPassword}
+                handleLogin={handleLogin}
+              />
+            </Route>
+          </Switch>
+        </Router>
       </div>
     )
   }
 
   return (
-    <Router>
-      <div>
-        <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/users">users</Link>
-        <Header />
-      </div>
-      <Notification />
-      <h1>blog app</h1>
-      <Switch>
-        <Route path="/blogs/:id">
-          <BlogPage blogs={blogs}/>
-        </Route>
-        <Route path="/users/:id">
-          <User users={users}/>
-        </Route>
-        <Route path="/users">
-          <Users />
-        </Route>
-        <Route path="/">
-          <ToggleBlogForm />
-          <BlogList />
-        </Route>
-      </Switch>
-    </Router>
+    <div className="container">
+      <Router>
+        <div>
+          <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="#" as="span">
+                  <Link style={padding} to="/">blogs</Link>
+                </Nav.Link>
+                <Nav.Link href="#" as="span">
+                  <Link style={padding} to="/users">users</Link>
+                </Nav.Link>
+                <Nav.Link href="#" as="span">
+                  <Header />
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+        </div>
+        <Notification />
+        <h1>blog app</h1>
+        <Switch>
+          <Route path="/blogs/:id">
+            <BlogPage blogs={blogs}/>
+          </Route>
+          <Route path="/users/:id">
+            <User users={users}/>
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/">
+            <ToggleBlogForm />
+            <BlogList />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
   )
 }
 
