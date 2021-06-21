@@ -11,3 +11,4 @@ Learn React, Redux, Node.js, MongoDB, GraphQL and TypeScript in one go! This cou
 ### [part5 - Testing React apps](./part5)
 ### [part6 - State management with Redux](./part6)
 ### [part7 - React router, custom hooks, styling app with CSS and webpack](./part7)
+### [part8 - GraphQL](./part8)
