@@ -1,0 +1,50 @@
+.done {
+  color: green;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.Noti {
+  max-width: 600px;
+  float: right;
+}
+
+.Login {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 0;
+  top: 50%;
+  left: 50%;
+  border-style: ridge;
+  border-radius: 10px;
+}
+
+.Login h2 {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.Login form {
+  margin: 0 auto;
+  max-width: 320px;
+}
+
+.page-child {
+  width: 50%;
+  float: left;
+  padding: 20px;
+}
